@@ -1,0 +1,72 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-app",
+  "main": "worker.ts",
+  "compatibility_date": "2025-03-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "minify": true,
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets",
+  },
+  "send_metrics": false,
+  "observability": {
+    "enabled": true,
+  },
+  "placement": { "mode": "smart" },
+  "queues": {
+    "producers": [
+      {
+        "queue": "my-queue",
+        "binding": "my-queue",
+      },
+    ],
+    "consumers": [
+      {
+        "queue": "my-queue",
+        "max_concurrency": 1,
+        "max_retries": 2,
+        "dead_letter_queue": "dead-letter-my-queue",
+      },
+    ],
+  },
+  "vars": {},
+  "d1_databases": [
+    {
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_id": "985892e6-26da-4ed6-8f76-70a3f4d38f36",
+      "database_name": "my-db",
+      "migrations_dir": "src/db/migrations",
+    },
+  ],
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "my-app",
+    },
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "CACHE_KV_ETH_GLOBAL",
+      "id": "7a6d1dd04d614652a4e596b08d721d7e",
+    },
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NEXT_CACHE_DO_QUEUE",
+        "class_name": "DOQueueHandler",
+      },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["DOQueueHandler"],
+    },
+  ],
+}

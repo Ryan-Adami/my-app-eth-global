@@ -1,0 +1,58 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index d57293d299284e195683512df0a3d0b26c501b01..0000000000000000000000000000000000000000
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 10368f65e85f13bfba1d3677576bf8f19220259d..56d0361df3f145411c3e26e3dbf49fad4a49ca6d 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -271,7 +271,7 @@ function getStackTrace() {
+ }
+ function getCircularReplacer() {
+   const ancestors = [];
+-  return function(_key, value) {
++  return function (_key, value) {
+     if (typeof value !== "object" || value === null) {
+       return value;
+     }
+@@ -381,7 +381,7 @@ function getLogger() {
+   }
+   return logger;
+ }
+-if (process.env.NODE_ENV === "test") ;
++if (process.env.NODE_ENV === "test");
+ function findDeployment(deployments, nameOrAddress, options) {
+   const retval = tryFindDeployment(deployments, nameOrAddress, options);
+   if (retval === void 0) {
+@@ -607,7 +607,10 @@ async function loadJSorTS(fileName, relativeToPath) {
+     enableTS(relativeToPath);
+     return require2(modulePath);
+   } else if (fileName.endsWith(".mjs")) {
+-    return import(modulePath);
++    return Promise.resolve({
++      default: {},
++      __esModule: true
++    });
+   } else if (fileName.endsWith(".cjs")) {
+     return Promise.resolve(require2(modulePath));
+   } else if (fileName.endsWith(".js")) {
+@@ -615,7 +618,10 @@ async function loadJSorTS(fileName, relativeToPath) {
+       return await Promise.resolve(require2(modulePath));
+     } catch (requireError) {
+       try {
+-        return await import(modulePath);
++        return Promise.resolve({
++          default: {},
++          __esModule: true
++        });
+       } catch (importError) {
+         throw new Error(
+           `Failed to load module: ${fileName}. Require error: ${requireError}. Import error: ${importError}`
+@@ -627,7 +633,7 @@ async function loadJSorTS(fileName, relativeToPath) {
+   }
+ }
+ function Memoizee(options) {
+-  return function(target, propertyKey, descriptor) {
++  return function (target, propertyKey, descriptor) {
+     const originalMethod = descriptor.value;
+     if (typeof originalMethod !== "function") {
+       throw new Error(`@Memoizee decorator can only be applied to methods.`);
