@@ -2,14 +2,16 @@
 
 import { BackButtonWrapper } from "@/components/back-button-wrapper";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { usePrivy, useSessionSigners } from "@privy-io/react-auth";
 import { retrieveLaunchParams } from "@telegram-apps/bridge";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isTelegramEnv, setIsTelegramEnv] = useState(false);
 
   const { login, authenticated, ready, user } = usePrivy();
+  const { addSessionSigners } = useSessionSigners();
 
   useEffect(() => {
     // Check if we're in a Telegram Mini App environment
@@ -22,6 +24,17 @@ export default function Home() {
           // when the user is not authenticated
           if (!authenticated && ready) {
             login();
+            if (user?.wallet?.address) {
+              addSessionSigners({
+                address: user.wallet.address,
+                signers: [
+                  {
+                    signerId: "qey1tpgwftard3imgm52sjmc",
+                    policyIds: [],
+                  },
+                ],
+              });
+            }
           }
         }
       } catch {
@@ -38,7 +51,7 @@ export default function Home() {
     return (
       <BackButtonWrapper back={false}>
         <div style={{ textAlign: "center", padding: "20px" }}>
-          <p>Logging in with Telegram...</p>
+          <Loader2 className="animate-spin" />
         </div>
       </BackButtonWrapper>
     );
