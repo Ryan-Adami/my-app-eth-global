@@ -16,7 +16,7 @@ export function InfoBox({ message, type = "tip", className }: TipBoxProps) {
   const baseClasses = "p-4 rounded-lg mb-2";
 
   const colorClasses = cn({
-    "bg-blue-500/20 text-blue-400": type === "tip",
+    "bg-gray-500/20 text-gray-400": type === "tip",
     "bg-yellow-500/20 text-yellow-400": type === "notice",
     "bg-red-500/20 text-red-400": type === "error",
   });

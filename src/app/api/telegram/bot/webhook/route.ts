@@ -19,7 +19,13 @@ const PRIVY_APP_SECRET = process.env.PRIVY_APP_SECRET;
 
 const privy = new PrivyClient(PRIVY_APP_ID, PRIVY_APP_SECRET);
 
-async function sendTelegramMessage(chatId: number, text: string) {
+async function sendTelegramMessage(
+  chatId: number,
+  text: string,
+  replyMarkup?: {
+    inline_keyboard: Array<Array<{ text: string; web_app?: { url: string } }>>;
+  }
+) {
   const response = await fetch(
     `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
     {
@@ -30,6 +36,7 @@ async function sendTelegramMessage(chatId: number, text: string) {
       body: JSON.stringify({
         chat_id: chatId,
         text: text,
+        ...(replyMarkup && { reply_markup: replyMarkup }),
       }),
     }
   );
@@ -50,6 +57,32 @@ interface TelegramUpdate {
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as TelegramUpdate;
+
+  // Handle /start command
+  if (body.message?.text === "/start") {
+    const chatId = body.message.chat.id;
+    const opts = {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: "Open Account",
+              web_app: {
+                url: "https://127.0.0.1:8443/",
+              },
+            },
+          ],
+        ],
+      },
+    };
+
+    await sendTelegramMessage(
+      chatId,
+      "Welcome! Please tap the button below to open the app.",
+      opts.reply_markup
+    );
+    return NextResponse.json({});
+  }
 
   // Handle /mywallet command
   if (body.message?.text === "/mywallet") {

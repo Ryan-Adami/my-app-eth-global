@@ -30,9 +30,9 @@ export const generateCoinbaseOnrampURLAction = createServerAction()
           amount: input.amount,
           network: input.network,
           fiatCurrency: input.fiatCurrency,
-          redirectUrl: input.redirectUrl,
+          redirectUrl: "https://t.me/eth_global_test_bot",
           sessionToken: sessionResult.sessionToken,
-          orgId: "",
+          telegramId: input.telegramId,
         });
 
         return {
@@ -65,7 +65,7 @@ export const generateCoinbaseOfframpURLAction = createServerAction()
           redirectUrl: input.redirectUrl,
           fiatCurrency: input.fiatCurrency,
           sessionToken: sessionResult.sessionToken,
-          orgId: input.orgId,
+          telegramId: input.telegramId,
         });
 
         return {

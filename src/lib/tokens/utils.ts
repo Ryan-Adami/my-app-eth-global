@@ -28,7 +28,7 @@ export const APPROVED_CHAINS = new Map<number, ChainInfo>([
       blockExplorer: ETH_MAINNET_INFO.blockExplorers.default,
       name: ETH_MAINNET_INFO.name,
       logoURI:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIa3GDAlj9jCzDOu-MBV7_NRhZ4VlzN-i8pg&s",
+        "https://upload.wikimedia.org/wikipedia/commons/b/b7/ETHEREUM-YOUTUBE-PROFILE-PIC.png",
       tokenList: ETH_MAINNET_TOKENS,
       nativeCurrency: ETH_MAINNET_INFO.nativeCurrency,
       network: ETH_MAINNET_INFO,

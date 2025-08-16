@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { importSPKI, jwtVerify } from "jose";
+import { PrivyClient } from "@privy-io/server-auth";
 
 export const verifyPrivyToken = cache(async () => {
   const cookieStore = await cookies();
@@ -8,16 +8,17 @@ export const verifyPrivyToken = cache(async () => {
   if (!accessToken) {
     return null;
   }
-  const verificationKey = await importSPKI(
-    "insert-your-privy-verification-key",
-    "ES256"
+  if (!process.env.PRIVY_APP_ID || !process.env.PRIVY_APP_SECRET) {
+    throw new Error("PRIVY_APP_ID or PRIVY_APP_SECRET is not set");
+  }
+  const privy = new PrivyClient(
+    process.env.PRIVY_APP_ID,
+    process.env.PRIVY_APP_SECRET
   );
+
   try {
-    const payload = await jwtVerify(accessToken, verificationKey, {
-      issuer: "privy.io",
-      audience: "insert-your-privy-app-id",
-    });
-    console.log(payload);
+    const verifiedClaims = await privy.verifyAuthToken(accessToken);
+    console.log("verifiedClaims", verifiedClaims);
   } catch (error) {
     console.error(error);
   }

@@ -16,6 +16,7 @@ export const coinbaseOnrampActionSchema = z.object({
       })
     )
     .min(1, "At least one address is required"),
+  telegramId: z.string().min(1, "Telegram ID is required"),
 });
 
 export const coinbaseOnrampURLSchema = z.object({
@@ -23,7 +24,7 @@ export const coinbaseOnrampURLSchema = z.object({
   amount: z.string().min(1, "Amount is required"),
   network: z.string().min(1, "Network is required"),
   fiatCurrency: z.string().min(1, "Fiat currency is required"),
-  orgId: z.string().min(1, "Org ID is required"),
+  telegramId: z.string().min(1, "Telegram ID is required"),
   redirectUrl: z.string().url("Redirect URL must be a valid URL"),
   sessionToken: z.string().min(1, "Session token is required"),
 });
@@ -35,7 +36,7 @@ export const coinbaseOfframpActionSchema = z.object({
   address: z.string().min(1, "Address is required"),
   redirectUrl: z.string().url("Redirect URL must be a valid URL"),
   fiatCurrency: z.string().min(1, "Fiat currency is required"),
-  orgId: z.string().min(1, "Org ID is required"),
+  telegramId: z.string().min(1, "Org ID is required"),
   addresses: z
     .array(
       z.object({
@@ -52,7 +53,7 @@ export const coinbaseOfframpURLSchema = z.object({
   asset: z.string().min(1, "Asset is required"),
   amount: z.string().min(1, "Amount is required"),
   network: z.string().min(1, "Network is required"),
-  orgId: z.string().min(1, "Org ID is required"),
+  telegramId: z.string().min(1, "Org ID is required"),
   redirectUrl: z.string().url("Redirect URL must be a valid URL"),
   fiatCurrency: z.string().min(1, "Fiat currency is required"),
   sessionToken: z.string().min(1, "Session token is required"),

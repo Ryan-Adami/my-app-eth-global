@@ -39,7 +39,7 @@ const avatarFallbackVariants = cva(
     variants: {
       variant: {
         default: "",
-        primary: "bg-blue-900 text-blue-400 border border-blue-950",
+        primary: "bg-gray-900 text-gray-400 border border-gray-950",
       },
       size: {
         sm: "text-[8px]",
