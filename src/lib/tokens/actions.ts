@@ -1,5 +1,11 @@
 import { multicall } from "@wagmi/core";
-import { TokenInfo, TokensObject } from "./tokens.mainnet";
+import {
+  ARBITRUM_MAINNET_TOKENS,
+  AVALANCHE_MAINNET_TOKENS,
+  BASE_MAINNET_TOKENS,
+  TokenInfo,
+  TokensObject,
+} from "./tokens.mainnet";
 import { Address, erc20Abi, zeroAddress } from "viem";
 import pMap from "p-map";
 
@@ -7,10 +13,14 @@ import { ETH_MAINNET_TOKENS } from "./tokens.mainnet";
 import { ETH_MAINNET_INFO } from "@/lib/config/chain-constants";
 import { tokenSelectState } from "@/state/token-select-state";
 import { wagmiConfig } from "../config/wagmi";
+import { arbitrum, avalanche, base } from "viem/chains";
 
 // Create mutable copies of the token maps
 const mutableTokenMaps = {
   [ETH_MAINNET_INFO.id]: { ...ETH_MAINNET_TOKENS },
+  [arbitrum.id]: { ...ARBITRUM_MAINNET_TOKENS },
+  [avalanche.id]: { ...AVALANCHE_MAINNET_TOKENS },
+  [base.id]: { ...BASE_MAINNET_TOKENS },
 };
 
 export const buildTokenList = async ({
@@ -93,25 +103,32 @@ export const buildTokenList = async ({
         ETH_MAINNET_INFO.id,
         mutableTokenMaps[ETH_MAINNET_INFO.id]
       ),
+      fetchChainBalances(arbitrum.id, mutableTokenMaps[arbitrum.id]),
+      fetchChainBalances(avalanche.id, mutableTokenMaps[avalanche.id]),
+      fetchChainBalances(base.id, mutableTokenMaps[base.id]),
     ]);
 
     // Extract successful results and log errors
-    const [ethTokens] = results.map((result, index) => {
-      if (result.status === "fulfilled") {
-        return result.value;
-      } else {
-        // Log the error but return an empty object to avoid breaking the token state
-        console.error(
-          `Failed to fetch tokens for chain index ${index}:`,
-          result.reason
-        );
-        return {};
-      }
-    });
+    const [ethTokens, arbitrumTokens, avalancheTokens, baseTokens] =
+      results.map((result, index) => {
+        if (result.status === "fulfilled") {
+          return result.value;
+        } else {
+          // Log the error but return an empty object to avoid breaking the token state
+          console.error(
+            `Failed to fetch tokens for chain index ${index}:`,
+            result.reason
+          );
+          return {};
+        }
+      });
 
     // Update token state
     const newTokens = {
       ...ethTokens,
+      ...arbitrumTokens,
+      ...avalancheTokens,
+      ...baseTokens,
     };
 
     tokenSelectState.tokens = {

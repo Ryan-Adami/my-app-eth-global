@@ -155,7 +155,7 @@ export default function Home() {
         {user?.wallet?.address &&
           tokens["1~0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"].balanceOf ===
             0n && (
-            <div className="flex flex-col items-center justify-center p-4 mt-4 rounded-md bg-muted">
+            <div className="flex flex-col items-center justify-center p-4 mt-4 rounded-md bg-muted animate-in fade-in duration-500">
               <Waves className="w-10 h-10" />
               <div className="text-xl mt-4">
                 Welcome, @{initData?.user?.username}
@@ -247,9 +247,20 @@ export default function Home() {
           ]}
         />
         <div className="mt-4 text-xl font-medium mb-2">Tokens</div>
-        <TokenDisplay
-          token={tokens["1~0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]}
-        />
+        <div className="flex flex-col gap-2">
+          <TokenDisplay
+            token={tokens["1~0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]}
+          />
+          <TokenDisplay
+            token={tokens["42161~0xaf88d065e77c8cc2239327c5edb3a432268e5831"]}
+          />
+          <TokenDisplay
+            token={tokens["43114~0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e"]}
+          />
+          <TokenDisplay
+            token={tokens["8453~0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"]}
+          />
+        </div>
       </div>
     </BackButtonWrapper>
   );

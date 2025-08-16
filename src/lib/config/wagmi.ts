@@ -1,6 +1,12 @@
 import { http } from "wagmi";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, AppKitNetwork } from "@reown/appkit/networks";
+import {
+  mainnet,
+  AppKitNetwork,
+  arbitrum,
+  avalanche,
+  base,
+} from "@reown/appkit/networks";
 import { fallback } from "wagmi";
 import { ETH_MAINNET_INFO } from "./chain-constants";
 
@@ -16,6 +22,9 @@ export const wagmiAdapter = new WagmiAdapter({
     [ETH_MAINNET_INFO.id]: fallback([
       http(ETH_MAINNET_INFO.rpcUrls.default.http[1]),
     ]),
+    [arbitrum.id]: http(),
+    [avalanche.id]: http(),
+    [base.id]: http(),
   },
 });
 
