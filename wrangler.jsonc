@@ -51,8 +51,8 @@
   ],
   "kv_namespaces": [
     {
-      "binding": "CACHE_KV_ETH_GLOBAL",
-      "id": "7a6d1dd04d614652a4e596b08d721d7e",
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "fb1a4312dede45ae8b3e506869bc2d2b",
     },
   ],
   "durable_objects": {
