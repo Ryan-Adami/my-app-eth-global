@@ -20,21 +20,15 @@ const commonColumns = {
     .notNull(),
 };
 
-export const userTable = sqliteTable(
-  "user",
+export const userTransactions = sqliteTable(
+  "user_transactions",
   {
     ...commonColumns,
     telegramId: text({
       length: 255,
     }),
-    walletAddress: text({
-      length: 255,
-    }),
   },
-  (table) => [
-    index("user_telegram_id_idx").on(table.telegramId),
-    index("user_wallet_address_idx").on(table.walletAddress),
-  ]
+  (table) => [index("user_telegram_id_idx").on(table.telegramId)]
 );
 
-export type User = InferSelectModel<typeof userTable>;
+export type UserTransactions = InferSelectModel<typeof userTransactions>;
