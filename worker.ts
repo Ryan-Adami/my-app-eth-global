@@ -59,7 +59,7 @@ export async function sendTelegramMessage(
   text: string,
   env: CloudflareEnv
 ) {
-  const TELEGRAM_TOKEN = env.TELEGRAM_BOT_TOKEN;
+  const TELEGRAM_TOKEN = env.TELEGRAM_TOKEN;
   if (!TELEGRAM_TOKEN) {
     console.error("TELEGRAM_TOKEN environment variable is not set");
     return;
