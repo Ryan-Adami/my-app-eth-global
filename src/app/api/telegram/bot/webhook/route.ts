@@ -266,7 +266,7 @@ async function handleStartCommand(chatId: number) {
           {
             text: "Open Account",
             web_app: {
-              url: "https://127.0.0.1:8443/",
+              url: "https://t.me/eth_global_test_bot/ethglobal",
             },
           },
         ],
