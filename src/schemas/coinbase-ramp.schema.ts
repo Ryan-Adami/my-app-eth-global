@@ -5,7 +5,6 @@ export const coinbaseOnrampActionSchema = z.object({
   amount: z.string().min(1, "Amount is required"),
   network: z.string().min(1, "Network is required"),
   fiatCurrency: z.string().min(1, "Fiat currency is required"),
-  redirectUrl: z.string().url("Redirect URL must be a valid URL"),
   addresses: z
     .array(
       z.object({

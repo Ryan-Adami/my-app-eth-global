@@ -5,10 +5,13 @@ import { generateCoinbaseOnrampURLAction } from "@/lib/coinbase/ramp.actions";
 import { toggleActivityNotification } from "@/state/notifications/activity-notification";
 
 import { usePrivy, useSessionSigners } from "@privy-io/react-auth";
-import { initDataState, useSignal } from "@telegram-apps/sdk-react";
+import {
+  initDataState,
+  useSignal,
+  closeMiniApp,
+} from "@telegram-apps/sdk-react";
 import {
   ArrowRightLeft,
-  DollarSign,
   Loader2,
   Scan,
   Send,
@@ -18,7 +21,6 @@ import {
 import { useEffect, useState } from "react";
 import { useServerAction } from "zsa-react";
 import toast from "react-hot-toast";
-import { NEXT_PUBLIC_SITE_URL } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -37,6 +39,9 @@ import { ActionButtons } from "@/components/ui/action-buttons";
 import { TokenDisplay } from "@/components/ui/token-display";
 import { useSnapshot } from "valtio";
 import { tokenSelectState } from "@/state/token-select-state";
+import { ArbitrumIcon } from "@/components/ui/icons/arbitrum";
+import { BaseIcon } from "@/components/ui/icons/base";
+import { AvalancheIcon } from "@/components/ui/icons/avalanche";
 
 export default function Home() {
   const [isTelegramEnv, setIsTelegramEnv] = useState(false);
@@ -134,9 +139,11 @@ export default function Home() {
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <div className="text-sm text-muted-foreground">
-                @{initData?.user?.username}
-              </div>
+              {initData?.user?.username && (
+                <div className="text-sm text-muted-foreground">
+                  @{initData?.user?.username}
+                </div>
+              )}
               <div className=" font-medium">
                 {initData?.user?.first_name} {initData?.user?.last_name}
               </div>
@@ -158,7 +165,8 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center p-4 mt-4 rounded-md bg-muted animate-in fade-in duration-500">
               <Waves className="w-10 h-10" />
               <div className="text-xl mt-4">
-                Welcome, @{initData?.user?.username}
+                Welcome
+                {initData?.user?.username ? `, @${initData.user.username}` : ""}
               </div>
               <div className="text-sm text-muted-foreground mt-2">
                 Add USDC to your wallet to get started
@@ -173,10 +181,9 @@ export default function Home() {
                 onClick={() =>
                   generateCoinbaseOnrampURL({
                     asset: "USDC",
-                    amount: "1",
+                    amount: "20",
                     network: "ethereum",
                     fiatCurrency: "USD",
-                    redirectUrl: `${NEXT_PUBLIC_SITE_URL}/dashboard/transactions`,
                     addresses: [
                       {
                         address: user!.wallet!.address,
@@ -203,7 +210,7 @@ export default function Home() {
                     <DrawerHeader>
                       <DrawerTitle>Receive USDC</DrawerTitle>
                       <DrawerDescription>
-                        Send USDC to your addresses below
+                        Receive USDC to any of your addresses below
                       </DrawerDescription>
                     </DrawerHeader>
                     <WalletDisplay
@@ -211,6 +218,25 @@ export default function Home() {
                         <EthereumIcon className="w-6 h-6 text-background" />
                       }
                       name="Ethereum"
+                      address={user?.wallet?.address}
+                    />
+                    <WalletDisplay
+                      icon={
+                        <ArbitrumIcon className="w-6 h-6 text-background" />
+                      }
+                      name="Arbitrum"
+                      address={user?.wallet?.address}
+                    />
+                    <WalletDisplay
+                      icon={
+                        <AvalancheIcon className="w-6 h-6 text-background" />
+                      }
+                      name="Avalanche"
+                      address={user?.wallet?.address}
+                    />
+                    <WalletDisplay
+                      icon={<BaseIcon className="w-6 h-6 text-background" />}
+                      name="Base"
                       address={user?.wallet?.address}
                     />
                     <DrawerFooter>
@@ -235,14 +261,16 @@ export default function Home() {
             {
               icon: <Send />,
               label: "Send",
+              onClick: () => {
+                closeMiniApp();
+              },
             },
             {
               icon: <ArrowRightLeft />,
               label: "Transfer",
-            },
-            {
-              icon: <DollarSign />,
-              label: "Buy",
+              onClick: () => {
+                closeMiniApp();
+              },
             },
           ]}
         />

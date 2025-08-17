@@ -66,7 +66,7 @@ dependencies:
     version: 2.2.2
   '@privy-io/react-auth':
     specifier: ^2.21.3
-    version: 2.21.3(@solana/spl-token@0.4.13)(@solana/web3.js@1.98.2)(@types/react@19.1.4)(bs58@5.0.0)(lit@3.3.0)(react-dom@19.1.0)(react@19.1.0)(typescript@5.8.3)(zod@3.24.4)
+    version: 2.21.3(@solana/spl-token@0.4.13)(@solana/web3.js@1.98.2)(@types/react@19.1.4)(bs58@5.0.0)(lit@3.3.0)(permissionless@0.2.54)(react-dom@19.1.0)(react@19.1.0)(typescript@5.8.3)(zod@3.24.4)
   '@privy-io/server-auth':
     specifier: ^1.31.1
     version: 1.31.1(typescript@5.8.3)(viem@2.29.4)
@@ -223,6 +223,9 @@ dependencies:
   p-map:
     specifier: ^7.0.3
     version: 7.0.3
+  permissionless:
+    specifier: ^0.2.54
+    version: 0.2.54(viem@2.29.4)
   persona:
     specifier: ^5.1.5
     version: 5.1.5
@@ -5575,7 +5578,7 @@ packages:
       viem: 2.33.3(typescript@5.8.3)(zod@3.24.4)
     dev: false
 
-  /@privy-io/js-sdk-core@0.53.4(typescript@5.8.3)(viem@2.33.3):
+  /@privy-io/js-sdk-core@0.53.4(permissionless@0.2.54)(typescript@5.8.3)(viem@2.33.3):
     resolution: {integrity: sha512-ObiyekURx9RAHsyL/NqwIDrMhl98ozBlHyEKD59yaUeZxP+wSuwWO59VgtvPUp0F1JAkg4N0aP7MdP6Cz7KBFA==}
     peerDependencies:
       permissionless: ^0.2.47
@@ -5601,6 +5604,7 @@ packages:
       jose: 4.15.9
       js-cookie: 3.0.5
       libphonenumber-js: 1.12.12
+      permissionless: 0.2.54(viem@2.29.4)
       set-cookie-parser: 2.7.1
       uuid: 9.0.1
       viem: 2.33.3(typescript@5.8.3)(zod@3.24.4)
@@ -5624,7 +5628,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@privy-io/react-auth@2.21.3(@solana/spl-token@0.4.13)(@solana/web3.js@1.98.2)(@types/react@19.1.4)(bs58@5.0.0)(lit@3.3.0)(react-dom@19.1.0)(react@19.1.0)(typescript@5.8.3)(zod@3.24.4):
+  /@privy-io/react-auth@2.21.3(@solana/spl-token@0.4.13)(@solana/web3.js@1.98.2)(@types/react@19.1.4)(bs58@5.0.0)(lit@3.3.0)(permissionless@0.2.54)(react-dom@19.1.0)(react@19.1.0)(typescript@5.8.3)(zod@3.24.4):
     resolution: {integrity: sha512-qgQaEf0WDyzw7I/z2tbABikEj3DgQKP0rN4iooU8dKxW9oDOssBOoa+NVXCHcC8ikAk4Q36Gd6fOw362IAxswA==}
     peerDependencies:
       '@abstract-foundation/agw-client': ^1.0.0
@@ -5653,7 +5657,7 @@ packages:
       '@privy-io/api-base': 1.6.0
       '@privy-io/chains': 0.0.2
       '@privy-io/ethereum': 0.0.2(viem@2.33.3)
-      '@privy-io/js-sdk-core': 0.53.4(typescript@5.8.3)(viem@2.33.3)
+      '@privy-io/js-sdk-core': 0.53.4(permissionless@0.2.54)(typescript@5.8.3)(viem@2.33.3)
       '@privy-io/public-api': 2.43.1(typescript@5.8.3)
       '@reown/appkit': 1.7.19(@types/react@19.1.4)(encoding@0.1.13)(lit@3.3.0)(react@19.1.0)(typescript@5.8.3)(zod@3.24.4)
       '@scure/base': 1.2.6
@@ -5677,6 +5681,7 @@ packages:
       md5: 2.3.0
       mipd: 0.0.7(typescript@5.8.3)
       ofetch: 1.4.1
+      permissionless: 0.2.54(viem@2.29.4)
       pino-pretty: 10.3.1
       qrcode: 1.5.4
       react: 19.1.0
@@ -20662,6 +20667,18 @@ packages:
 
   /peberminta@0.9.0:
     resolution: {integrity: sha512-XIxfHpEuSJbITd1H3EeQwpcZbTLHc+VVr8ANI9t5sit565tsI4/xK3KWTUFE2e6QiangUkh3B0jihzmGnNrRsQ==}
+    dev: false
+
+  /permissionless@0.2.54(viem@2.29.4):
+    resolution: {integrity: sha512-r191GhpndQ9gAQqzxP75n1H2oIezmg7SJlKDEYP/R7v48ZdnXxdyOiLklvW4CRWN5IBKDJ+wUKZXSHfknsWIhQ==}
+    peerDependencies:
+      ox: ^0.6.7
+      viem: ^2.28.1
+    peerDependenciesMeta:
+      ox:
+        optional: true
+    dependencies:
+      viem: 2.29.4(typescript@5.8.3)(zod@3.24.4)
     dev: false
 
   /persona-react@6.2.1-alpha.0(react@19.1.0):

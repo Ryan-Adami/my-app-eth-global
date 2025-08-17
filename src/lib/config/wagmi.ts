@@ -10,7 +10,10 @@ import {
 import { fallback } from "wagmi";
 import { ETH_MAINNET_INFO } from "./chain-constants";
 
-export const networks = [mainnet] as [AppKitNetwork, ...AppKitNetwork[]];
+export const networks = [mainnet, arbitrum, avalanche, base] as [
+  AppKitNetwork,
+  ...AppKitNetwork[],
+];
 
 export const wagmiAdapter = new WagmiAdapter({
   networks: networks,

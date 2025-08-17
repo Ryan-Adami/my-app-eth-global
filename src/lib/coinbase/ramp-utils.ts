@@ -142,7 +142,7 @@ export function generateOnrampURL(params: CoinbaseOnrampURLParams): string {
     amount,
     network,
     fiatCurrency,
-    orgId,
+    telegramId,
     redirectUrl,
     sessionToken,
   } = params;
@@ -166,7 +166,7 @@ export function generateOnrampURL(params: CoinbaseOnrampURLParams): string {
   if (fiatCurrency) {
     queryParams.append("fiatCurrency", fiatCurrency);
   }
-  queryParams.append("partnerUserId", orgId);
+  queryParams.append("partnerUserId", telegramId);
   if (redirectUrl) {
     queryParams.append("redirectUrl", redirectUrl);
   }
@@ -178,7 +178,8 @@ export function generateOnrampURL(params: CoinbaseOnrampURLParams): string {
  * Generates a Coinbase Offramp URL with the provided parameters
  */
 export function generateOfframpURL(params: CoinbaseOfframpURLParams): string {
-  const { asset, amount, network, orgId, redirectUrl, sessionToken } = params;
+  const { asset, amount, network, telegramId, redirectUrl, sessionToken } =
+    params;
 
   const baseUrl = "https://pay.coinbase.com/v3/sell/input";
 
@@ -194,7 +195,7 @@ export function generateOfframpURL(params: CoinbaseOfframpURLParams): string {
     queryParams.append("presetCryptoAmount", numericAmount.toString());
   }
 
-  queryParams.append("partnerUserId", orgId);
+  queryParams.append("partnerUserId", telegramId);
 
   if (redirectUrl) {
     queryParams.append("redirectUrl", redirectUrl);
